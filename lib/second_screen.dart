@@ -91,7 +91,8 @@ class _SecondScreenState extends State<SecondScreen> {
                     ContactProvider.instance.update(Contact(
                         name: contactName.text,
                         number: contactNumber.text,
-                        url: coverUrl.text
+                        url: coverUrl.text,
+                      id: widget.contact!.id,
                     ));
 
                     Navigator.push(context,
