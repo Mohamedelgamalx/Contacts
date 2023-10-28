@@ -1,3 +1,4 @@
+import 'package:contacts/second_screen.dart';
 import 'package:flutter/material.dart';
 import 'contact.dart';
 import 'home.dart';
@@ -18,8 +19,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Home(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const Home(),
     );
   }
 }

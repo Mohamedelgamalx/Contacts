@@ -35,7 +35,8 @@ class _BottomSheetCustomWidgetState extends State<BottomSheetCustomWidget> {
                 labelStyle: TextStyle(
                     color: Colors.grey,
                     fontSize: 20,
-                    fontWeight: FontWeight.bold)),
+                    fontWeight: FontWeight.bold)
+            ),
           ),
           TextFormField(
             controller: widget.contactNumber,
