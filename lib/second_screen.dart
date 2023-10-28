@@ -1,3 +1,4 @@
+import 'package:contacts/contact_provider.dart';
 import 'package:flutter/material.dart';
 import 'contact.dart';
 import 'home.dart';
@@ -87,7 +88,7 @@ class _SecondScreenState extends State<SecondScreen> {
               child: ElevatedButton(
                   onPressed: () {
                     setState(() {});
-                    contactList.add(Contact(
+                    ContactProvider.instance.update(Contact(
                         name: contactName.text,
                         number: contactNumber.text,
                         url: coverUrl.text
@@ -146,7 +147,7 @@ class _SecondScreenState extends State<SecondScreen> {
                               onPressed: () {
                                 Navigator.push(context,MaterialPageRoute(builder: (context) => const Home())
                                 );
-                                contactList.remove(widget.contact);
+                                ContactProvider.instance.deleteContact(widget.contact!.id!);
                               },
                               style: ElevatedButton.styleFrom(
                                   elevation: 0,

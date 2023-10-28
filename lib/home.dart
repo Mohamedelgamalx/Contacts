@@ -1,6 +1,8 @@
+import 'package:contacts/contact.dart';
 import 'package:contacts/second_screen.dart';
 import 'package:flutter/material.dart';
 import 'bottom_sheet.dart';
+import 'contact_provider.dart';
 import 'main.dart';
 
 class Home extends StatefulWidget {
@@ -49,46 +51,62 @@ class _HomeState extends State<Home> {
             size: 40,
           ),
         ),
-        body: GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 1,
-        ),
-          itemCount: contactList.length,
-          itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(onPressed: () {
-
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SecondScreen(contact: contactList[index],)));
-            },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0x0fffffff),
-                    elevation: 0
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      maxRadius: 60,
-                      backgroundImage: NetworkImage(contactList[index].url),
-                    ),
-                    Text(contactList[index].name, style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black
-                    ),
-                    ),
-                    Text(contactList[index].number, style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black45
-                    ),
-                    ),
-                  ],
-                )
-            ),
-          );
-        },
+        body: FutureBuilder<List<Contact>>(
+          future: ContactProvider.instance.getAllContacts(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(snapshot.error.toString()),
+              );
+            }
+            if (snapshot.hasData) {
+              contactList = snapshot.data!;
+            }
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1,
+              ),
+              itemCount: snapshot.data!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) =>
+                            SecondScreen(contact: contactList[index],)));
+                  },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0x0fffffff),
+                          elevation: 0
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            maxRadius: 60,
+                            backgroundImage: NetworkImage(contactList[index]
+                                .url),
+                          ),
+                          Text(contactList[index].name, style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black
+                          ),
+                          ),
+                          Text(
+                            contactList[index].number, style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black45
+                          ),
+                          ),
+                        ],
+                      )
+                  ),
+                );
+              },
+            );
+          }
         ),
     );
   }

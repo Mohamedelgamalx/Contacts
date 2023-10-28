@@ -1,4 +1,5 @@
 import 'package:contacts/contact.dart';
+import 'package:contacts/contact_provider.dart';
 import 'package:contacts/main.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
@@ -64,7 +65,7 @@ class _BottomSheetCustomWidgetState extends State<BottomSheetCustomWidget> {
             child: ElevatedButton(
                 onPressed: () {
                   setState(() {});
-                  contactList.add(Contact(
+                  ContactProvider.instance.insertContact(Contact(
                       name: widget.contactName.text,
                       number: widget.contactNumber.text,
                       url: widget.coverUrl.text

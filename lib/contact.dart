@@ -1,3 +1,5 @@
+import 'package:contacts/contact_provider.dart';
+
 class Contact {
   int? id;
   late String name;
@@ -12,22 +14,22 @@ class Contact {
   });
 
   Contact.fromMap(Map<String, dynamic> map) {
-    if (map['id'] != null) {
-      id = map['id'];
+    if (map[columnId] != null) {
+      id = map[columnId];
     }
-    name = map['name'];
-    number = map['number'];
-    url = map['url'];
+    name = map[columnName];
+    number = map[columnNumber];
+    url = map[columnUrl];
   }
 
   Map<String,dynamic> toMap() {
     Map<String,dynamic> map = {};
     if (id != null) {
-      map['id'] = id;
+      map[columnId] = id;
     }
-    map['name'] = name;
-    map['number'] = number;
-    map['url'] = url;
+    map[columnName] = name;
+    map[columnNumber] = number;
+    map[columnUrl] = url;
     return map;
   }
 }
